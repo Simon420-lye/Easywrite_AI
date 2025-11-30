@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+requests
+pydantic
+fastapi
+uvicorn[standard]
+requests
+groq
+sentence-transformers
+faiss-cpu
+numpy
+scikit-learn
+streamlit
+pydantic
+python-dotenv
