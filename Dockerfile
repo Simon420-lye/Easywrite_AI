@@ -1,23 +1,19 @@
-# FROM python-3.13.6-slim  AS builder
-# CMD pip install 
-
 FROM python:3.11-slim
 
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
+# Set work directory
 WORKDIR /app
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends build-essential gcc libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
+# Copy ONLY requirements first (for Docker cache)
+COPY requirements.txt .
 
-COPY requirements.txt /app/requirements.txt
-RUN pip install --upgrade pip
-RUN pip install -r /app/requirements.txt
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
+# Copy the entire project
 COPY . .
 
+# Expose Render port
 EXPOSE 8000
 
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "4", "--proxy-headers"]
+# Start FastAPI with Uvicorn
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
