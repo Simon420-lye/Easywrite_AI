@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-BACKEND = "https://easywrite-ai.onrender.com"
+BACKEND = "http://127.0.0.1:8000"
 
 # ---------------------- BRANDING + PAGE CONFIG ----------------------
 st.set_page_config(
